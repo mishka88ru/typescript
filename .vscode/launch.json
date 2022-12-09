@@ -9,8 +9,8 @@
 			"request": "launch",
 			"name": "Launch Chrome against localhost",
 			"url": "http://localhost:3000",
-			"webRoot": "${workspaceFolder}/03_compiler",
-			"outFiles": ["${workspaceFolder}/03_compiler/dist/**/*.js"]
+			"webRoot": "${workspaceFolder}/04_compiler",
+			"outFiles": ["${workspaceFolder}/04_compiler/dist/**/*.js"]
 		}
 	]
 }
