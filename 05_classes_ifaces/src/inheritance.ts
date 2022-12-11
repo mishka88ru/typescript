@@ -93,6 +93,10 @@ class AccountingDepartment extends Department {
 	}
 };
 
+function showInfo(dep: Department) {
+	console.log(dep.name);
+}
+
 const accounting = AccountingDepartment.getInstance();//new AccountingDepartment("dep1", []);
 
 accounting.addEmployee("Mike");
@@ -113,3 +117,6 @@ console.log(emp1, ITDepartment.FiscalYear);
 const it = new ITDepartment("dep2", [ "Alex" ]);
 it.describe();
 it.printEmployeeInformation();
+
+showInfo(it);
+showInfo(accounting);

@@ -1,115 +1,57 @@
 
-abstract class Department {
-	//private readonly id: string;
-	//name: string;
+type AddFn = (a: number, b: number) => number;
+let add: AddFn;
+add = (n1: number, n2: number) => {
+	return n1 + n2;
+}
+console.log(add(1, 2));
 
-	protected employees: string[] = [];
+interface AddFn2 {
+	(a: number, b: number): number;
+}
+let add2: AddFn2;
+add2 = (n1: number, n2: number) => {
+	return n1 + n2;
+}
+console.log(add2(1, 2));
 
-	static FiscalYear = 2022;
+/////////////////////////////////////////
 
-	static createEmployee(name: string) {
-		return { name: name };
+interface Named {
+	readonly name: string;
+
+	outputName?: string;
+	printMe?(): void;
+
+	printInfo(): void;
+}
+
+interface Greetable /*extends Named*/ {
+	greet(phrase: string): void;
+};
+
+class Person implements Greetable, Named {
+	constructor(public name: string, private age: number, public outputName?: string) { }
+
+	greet(phrase: string): void {
+		console.log(phrase, this.name);
 	}
 
-
-	constructor(private readonly id: string, public name: string) {
-	//	this.name = name;
+	printInfo() {
+		console.log(this.name, this.age);
 	}
 
-	abstract describe(this: Department): void;
-//	{ console.log(`Department [${this.id}] name is ${this.name}, number of it's members is ${this.employees.length}.`); }
-
-	addEmployee(e: string) {
-	//	this.id = e; // readonly
-		this.employees.push(e);
-	}
-
-	printEmployeeInformation() {
-		console.log(`Department [${this.id}] has`, this.employees.length, "emplyees");
-		console.log(this.employees);
+	printMe() {
+		console.log(this.outputName ? this.outputName : "noname");
 	}
 };
 
-class ITDepartment extends Department {
-	constructor(id: string, public admins: string[]) {
-		super(id, "Information Technology");
-		admins.forEach(e => {
-			this.addEmployee(e);
-		});
-	}
+let user1: Greetable;
+user1 = new Person("Mike", 34, "Mickey");
+//user1.name = "Mickey";
+(user1 as Person).printMe();
 
-	describe(this: Department): void {
-	//	super.describe();
-		console.log("BTW, brilliant hackers from IT welcomes you!");
-	}
-};
-
-class AccountingDepartment extends Department {
-	describe(this: Department): void {
-		console.log("Guys responsible for all troubles in the company.")
-	}
-
-	private lastReport: string;
-
-	get LastReport() {
-		if (this.lastReport && this.lastReport.length > 0)
-			return this.lastReport;
-		throw new Error("No report found.");
-	}
-
-	set LastReport(text: string) {
-		if (!text)
-			throw new Error("Invalid report.");
-		this.addReport(text);
-	}
-
-	private constructor(id: string, private reports: string[]) {
-		super(id, "Accounting");
-		this.lastReport = reports.length > 0 ? reports[reports.length - 1] : "";
-	}
-
-	private static instance: AccountingDepartment;
-	static getInstance() {
-		if (!this.instance)
-			this.instance = new AccountingDepartment("dep-acc", []);
-		return this.instance;
-	}
-
-	addReport(text: string) {
-		this.reports.push(text);
-		this.lastReport = text;
-	}
-
-	printReports() {
-		console.log(this.reports);
-	}
-
-	addEmployee(name: string): void {
-		if (name === "Mishka") {
-			this.addReport("This name could not be used.");;
-			return;
-		}
-		this.employees.push(name);
-	}
-};
-
-const accounting = AccountingDepartment.getInstance();//new AccountingDepartment("dep1", []);
-
-accounting.addEmployee("Mike");
-accounting.addEmployee("Mishka");
-accounting.addEmployee("Mickey");
-
-accounting.addReport("Something went wrong!!");
-console.log(accounting.LastReport);
-accounting.LastReport = "Disastrous events are happening the machinery hall. Right NOW!!!";
-
-accounting.describe();
-accounting.printEmployeeInformation();
-accounting.printReports();
-
-const emp1 = Department.createEmployee("Mikhail");
-console.log(emp1, ITDepartment.FiscalYear);
-
-const it = new ITDepartment("dep2", [ "Alex" ]);
-it.describe();
-it.printEmployeeInformation();
+user1.greet("Hello");
+(user1 as Person).printInfo();
+(user1 as Person).outputName = "Mishka";
+(user1 as Person).printMe();
