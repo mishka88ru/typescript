@@ -27,17 +27,39 @@ const var2: Universal  = "12";
 
 console.log(e1, var1, var2);
 
-
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: number, b: string): string;
+function add(a: string, b: number): string;
 function add(a: Combinable, b: Combinable) {
 	if (typeof a === "string" || typeof b === "string") {
-		return a.toString() + b.toString();
+		return a.toString() + " " + b.toString();
 	}
 	return +a + +b;
 }
 
+const result = add("Mike", "Bez");
+console.log(result.split(" "));
+
 console.log(add(var1, var1));
 console.log(add(var2, var2));
 console.log(add(var1, var2));
+console.log(add(var2, var1));
+
+// From a database for example
+const fetchedUserData = {
+	id: "u1", 
+	name: "Max",
+	job: { title: "CTO", description: "ACS" } // may or may not exist - from external source
+};
+//console.log(fetchedUserData.job && fetchedUserData.job.title);
+console.log(fetchedUserData?.job?.title);
+
+
+const userInput = ""; // undefined, null
+const storedData1 = userInput || "DEFAULT";
+const storedData2 = userInput ?? "DEFAULT";
+console.log(userInput, storedData1, storedData2);
 
 
 type UnknownEmployee = Employee | Admin;
@@ -116,3 +138,20 @@ inp1.value = "Hi there!";
 inp2.value = "Hello";
 
 
+interface ErrorContainer {
+	// { email: "Not a valid email"}
+	// { username: "Must start with a letter" }
+
+	id: string;
+//	count: number;
+	[prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+	id: "1st",
+	email: "Not a valid email",
+	username: "Must start with a capital letter",
+	comment: "This error is really a show-stopper!"
+};
+
+console.log(errorBag);
