@@ -91,6 +91,8 @@ button:active {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   margin: 1rem;
+  position: relative;
+  background: white;
 }
 
 .projects li h2 {
@@ -105,6 +107,9 @@ button:active {
 .projects li h3 {
   color: #575757;
   font-size: 1rem;
+  position: absolute;
+  top: 0.25rem;
+  right: 2rem;
 }
 
 .project li p {
