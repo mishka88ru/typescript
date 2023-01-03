@@ -1,42 +1,43 @@
-/// <reference path="base-component.ts" />
-/// <reference path="../decorators/autobind.ts" />
-/// <reference path="../models/drag-drop.ts" />
-/// <reference path="../models/project.ts" />
 
-namespace App {
-  export class ProjectItem
-    extends Component<HTMLUListElement, HTMLLIElement>
-    implements DDInterfaces.Draggable
-  {
-    constructor(hostID: string, private prj: Project) {
-      super("single-project", hostID, false, prj.id);
+import { autobind } from "../decorators/autobind.js";
+import { Draggable } from "../models/drag-drop.js";
+import Component from "../components/base-component.js";
+import { Project } from "../models/project.js";
 
-      this.configure();
-      this.renderContent();
-    }
+export class ProjectItem
+	extends Component<HTMLUListElement, HTMLLIElement>
+	implements Draggable
+{
+	constructor(hostID: string, private prj: Project) {
+		super("single-project", hostID, false, prj.id);
 
-    get numAssigned() {
-      return this.prj.people === 1 ? "1 person" : `${this.prj.people} persons`;
-    }
+		this.configure();
+		this.renderContent();
+	}
 
-    configure(): void {
-      this.element.addEventListener("dragstart", this.dragStartHandler);
-      this.element.addEventListener("dragend", this.dragEndHandler);
-    }
+	get numAssigned() {
+		return this.prj.people === 1 ? "1 person" : `${this.prj.people} persons`;
+	}
 
-    renderContent(): void {
-      this.element.querySelector("h2")!.textContent = this.prj.title;
-      this.element.querySelector("h3")!.textContent =
-        this.numAssigned + " assigned";
-      this.element.querySelector("p")!.textContent = this.prj.descr;
-    }
+	configure(): void {
+		this.element.addEventListener("dragstart", this.dragStartHandler);
+		this.element.addEventListener("dragend", this.dragEndHandler);
+	}
 
-    @autobind
-    dragStartHandler(event: DragEvent): void {
-      event.dataTransfer!.setData("text/plain", this.prj.id);
-      event.dataTransfer!.effectAllowed = "move";
-    }
+	renderContent(): void {
+		this.element.querySelector("h2")!.textContent = this.prj.title;
+		this.element.querySelector("h3")!.textContent =
+		this.numAssigned + " assigned";
+		this.element.querySelector("p")!.textContent = this.prj.descr;
+	}
 
-    dragEndHandler(_: DragEvent): void {}
-  }
+	@autobind
+	dragStartHandler(event: DragEvent): void {
+		event.dataTransfer!.setData("text/plain", this.prj.id);
+		event.dataTransfer!.effectAllowed = "move";
+	}
+
+	dragEndHandler(_: DragEvent): void {
+		
+	}
 }
