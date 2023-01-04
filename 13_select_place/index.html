@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Understanding TypeScript</title>
+  <script src="dist/OpenLayers.js"></script>
+  <style>
+    .ol-attribution,
+    .olControlAttribution {
+      display: none !important;
+    }
+  </style>
+  <script>
+    /*function mapDisplay(lat, lon) {
+        ap = new OpenLayers.Map("map");
+        var mapnik         = new OpenLayers.Layer.OSM();
+        var fromProjection = new OpenLayers.Projection("EPSG:4326");
+        var toProjection   = new OpenLayers.Projection("EPSG:900913");
+
+        map.addLayer(mapnik);
+
+        var position = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+        var zoom     = 15;
+        map.setCenter(position, zoom);
+
+        var markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        markers.addMarker(new OpenLayers.Marker(position));
+      }*/
+  </script>
+  <script src="dist/bundle.js" defer></script>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="map"></div>
+  <form>
+    <input type="text" id="address">
+    <button type="submit">Search address</button>
+  </form>
+  <p id="info"></p>
+  <p id="coordinates"></p>
+</body>
+</html>
