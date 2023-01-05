@@ -16,9 +16,12 @@ type NominatimGeoResponse = {
 
 
 const form = document.querySelector("form")!;
+form.addEventListener("submit", searchAddressHandler);
+
 const addressInput = document.getElementById("address")! as HTMLInputElement;
 const info = document.getElementById("info")! as HTMLParagraphElement;
 const coordinates = document.getElementById("coordinates")! as HTMLParagraphElement;
+
 
 function searchAddressHandler(event: Event) {
 	event.preventDefault();
@@ -51,11 +54,9 @@ function searchAddressHandler(event: Event) {
 			coordinates.textContent = "";
 			info.textContent = err;
 
-			mapDisplay(true, 0, 0);
+			mapDisplay(false, 0, 0);
 	});
 }
-
-form.addEventListener("submit", searchAddressHandler);
 
 
 const view = new View({
